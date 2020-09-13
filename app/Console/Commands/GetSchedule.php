@@ -44,5 +44,6 @@ class GetSchedule extends Command
         $module->seveVideoInfo();
 
         echo 'ここに実行内容を記載する';
+        //テスト
     }
 }
