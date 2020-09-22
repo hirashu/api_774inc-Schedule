@@ -97,6 +97,6 @@ class GetScheduleModule
         $str= json_encode($items,JSON_UNESCAPED_UNICODE);
 
         //JSONで保存（storage/app）
-        Storage::put('test123.json', $str);
+        Storage::put(env('SCHEDULE_FILE_NAME'), $str);
     }
 }
