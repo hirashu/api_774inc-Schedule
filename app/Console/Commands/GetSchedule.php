@@ -39,11 +39,10 @@ class GetSchedule extends Command
     public function handle()
     {
 
-        echo '実行します';
+        echo 'getscheduleを実行します';
         $module= new GetScheduleModule();
         $module->seveVideoInfo();
 
-        echo 'ここに実行内容を記載する';
-        //テスト
+        echo 'getscheduleが完了しました';
     }
 }

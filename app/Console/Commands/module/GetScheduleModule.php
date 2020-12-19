@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Google_Client;
 use Google_Service_YouTube;
+use DateTime;
 
 use App\Enums\MemberChannelId;
 use Illuminate\Support\Facades\Storage;
@@ -13,8 +14,13 @@ class GetScheduleModule
     const MAX_SNIPPETS_COUNT = 50;
     const DEFAULT_ORDER_TYPE = 'viewCount';
 
+    private string $googleApiKye;
+
     public function seveVideoInfo()
     {
+        //APIキーの設定
+        $this->googleApiKye = $this->getGoogleApiKey();
+
         //チェンネルIdの配列を取得
         $channelIds = MemberChannelId::getValues();
 
@@ -25,7 +31,7 @@ class GetScheduleModule
         foreach ($videoIdList as $videoId) {
             $this->getVideoInfoByVideolId($videoId);
         }*/
-        $this->getVideoInfoByVideolId(implode(',',$videoIdList));
+        $this->getVideoInfoByVideolId(implode(',', $videoIdList));
     }
 
     /**
@@ -37,7 +43,7 @@ class GetScheduleModule
     {
         // Googleへの接続情報のインスタンスを作成と設定
         $client = new Google_Client();
-        $client->setDeveloperKey(env('GOOGLE_API_KEY'));
+        $client->setDeveloperKey($this->googleApiKye);
 
         // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $youtube = new Google_Service_YouTube($client);
@@ -59,25 +65,24 @@ class GetScheduleModule
             //videoIdのみを取得
             $videoIds = collect($items->getItems())->pluck('id')->pluck('videoId')->all();
 
-            foreach($videoIds as $videoId){
-                array_push($videoIdList,$videoId);
+            foreach ($videoIds as $videoId) {
+                array_push($videoIdList, $videoId);
             }
         }
 
-         //nullと空文字の配列を削除
-            $videoIdList = array_filter($videoIdList, function ($val) {
-                return !is_null($val);
-            });
+        //nullと空文字の配列を削除
+        $videoIdList = array_filter($videoIdList, function ($val) {
+            return !is_null($val);
+        });
 
         return $videoIdList;
     }
-
 
     private function getVideoInfoByVideolId(string $videoIds)
     {
         // Googleへの接続情報のインスタンスを作成と設定
         $client = new Google_Client();
-        $client->setDeveloperKey(env('GOOGLE_API_KEY'));
+        $client->setDeveloperKey($this->googleApiKye);
         // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $youtube = new Google_Service_YouTube($client);
 
@@ -94,9 +99,29 @@ class GetScheduleModule
         $videoList_liveStreamingDetails = collect($items->getItems())->pluck(['liveStreamingDetails'])->first();
         $video = ['id' => $videoList_id, 'snippet' => $videoList_snippet, 'liveStreamingDetails' => $videoList_liveStreamingDetails];
         */
-        $str= json_encode($items,JSON_UNESCAPED_UNICODE);
+        $str = json_encode($items, JSON_UNESCAPED_UNICODE);
 
         //JSONで保存（storage/app）
         Storage::put(env('SCHEDULE_FILE_NAME'), $str);
+    }
+
+    private function getGoogleApiKey(): string
+    {
+        print_r(env('GOOGLE_API_KEY_LIST') . "\n");
+
+        $MY_ENV_ARRAY = array_map('trim', explode(',', env('GOOGLE_API_KEY_LIST')));
+
+        //現在の時間を取得し、特定の時間の時に値を設定する。
+        $now = new DateTime();
+        switch ($now) {
+            case $now > new DateTime('18:00');
+                return $MY_ENV_ARRAY[0];
+            case $now > new DateTime('12:00');
+                return $MY_ENV_ARRAY[1];
+            case $now > new DateTime('06:00');
+                return $MY_ENV_ARRAY[2];
+            default;
+                return $MY_ENV_ARRAY[3];
+        }
     }
 }
