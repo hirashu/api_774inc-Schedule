@@ -20,6 +20,7 @@ class GetScheduleModule
     {
         //APIキーの設定
         $this->googleApiKye = $this->getGoogleApiKey();
+        echo $this->googleApiKye;
 
         //チェンネルIdの配列を取得
         $channelIds = MemberChannelId::getValues();
@@ -107,21 +108,35 @@ class GetScheduleModule
 
     private function getGoogleApiKey(): string
     {
-        print_r(env('GOOGLE_API_KEY_LIST') . "\n");
-
-        $MY_ENV_ARRAY = array_map('trim', explode(',', env('GOOGLE_API_KEY_LIST')));
-
-        //現在の時間を取得し、特定の時間の時に値を設定する。
+        //現在の時間を取得し、2時間おきに使用するキーを変更する。
         $now = new DateTime();
-        switch ($now) {
-            case $now > new DateTime('18:00');
-                return $MY_ENV_ARRAY[0];
-            case $now > new DateTime('12:00');
-                return $MY_ENV_ARRAY[1];
-            case $now > new DateTime('06:00');
-                return $MY_ENV_ARRAY[2];
+        switch ($now->format('H')) {
+            case '00';
+                return env('GOOGLE_API_KEY_1');
+            case '02';
+                return env('GOOGLE_API_KEY_2');
+            case '04';
+                return env('GOOGLE_API_KEY_3');
+            case '06';
+                return env('GOOGLE_API_KEY_4');
+            case '08';
+                return env('GOOGLE_API_KEY_5');
+            case '10';
+                return env('GOOGLE_API_KEY_6');
+            case '12';
+                return env('GOOGLE_API_KEY_7');
+            case '14';
+                return env('GOOGLE_API_KEY_8');
+            case '16';
+                return env('GOOGLE_API_KEY_9');
+            case '18';
+                return env('GOOGLE_API_KEY_10');
+            case '20';
+                return env('GOOGLE_API_KEY_11');
+            case '22';
+                return env('GOOGLE_API_KEY_12');
             default;
-                return $MY_ENV_ARRAY[3];
+                return env('GOOGLE_API_KEY_1');
         }
     }
 }
