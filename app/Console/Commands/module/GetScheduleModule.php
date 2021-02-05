@@ -16,7 +16,7 @@ class GetScheduleModule
 
     private string $googleApiKye;
 
-    public function seveVideoInfo()
+    public function saveVideoInfo()
     {
         //APIキーの設定
         $this->googleApiKye = $this->getGoogleApiKey();
@@ -49,8 +49,8 @@ class GetScheduleModule
         // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $youtube = new Google_Service_YouTube($client);
 
-        //gmdateを使うべきかよくわからんが仮置き
-        $date = date('Y-m-d', strtotime('-1 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
+        //時間設定は RFC 3339 形式の date-time 値
+        $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
         print_r($date . "\n");
 
         $videoIdList = array();
@@ -136,7 +136,10 @@ class GetScheduleModule
             case '22';
                 return env('GOOGLE_API_KEY_12');
             default;
-                return env('GOOGLE_API_KEY_1');
+                //正午でキーを切り替える
+                $noon  =new DateTime();
+                $noon->setTime(12,0,0);
+                return $now < $noon ? env('GOOGLE_API_SUB_KEY_1') : env('GOOGLE_API_SUB_KEY_2');
         }
     }
 }

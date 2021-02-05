@@ -21,6 +21,9 @@ final class MemberChannelId extends Enum
     const HASHIBA_NATSUMI = "UC_BlXOQe5OcRC7o0GX8kp8A";       //羽柴なつみ
     const SESHIMA_RUI = "UC_WOBIopwUih0rytRnr_1Ag";           //瀬島るい
     const HIRA_HIKARI = "UCFsWaTQ7kT76jNNGeGIKNSA";           //飛良ひかり
+    const TSUKINO_TIROL = "UCqskJ0nmw-_eweWfsKvbrzQ";         //月野木ちろる
+    const KONAN_MIA = "UC4PrHgUcAtOoj_LKmUL-uLQ";             //湖南みあ
+    const OURA_RUKAKO = "UC3xG1XWzAKt5dxSxktJvtxg";           //大浦るかこ
     /**ハニーストラップ*/
     const SUO_PATRA = "UCeLzT-7b2PBcunJplmWtoDg";              //周防パトラ
     const SAIENJI_MARY = "UCwePpiw1ocZRSNSkpKvVISw";           //西園寺メアリ
