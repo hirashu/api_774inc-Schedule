@@ -41,7 +41,7 @@ class GetSchedule extends Command
 
         echo 'getscheduleを実行します';
         $module= new GetScheduleModule();
-        $module->seveVideoInfo();
+        $module->saveVideoInfo();
 
         echo 'getscheduleが完了しました';
     }
