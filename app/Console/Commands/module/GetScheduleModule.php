@@ -118,28 +118,25 @@ class GetScheduleModule
             case '04';
                 return env('GOOGLE_API_KEY_3');
             case '06';
-                return env('GOOGLE_API_KEY_4');
+                return env('GOOGLE_API_KEY_1');
             case '08';
-                return env('GOOGLE_API_KEY_5');
+                return env('GOOGLE_API_KEY_2');
             case '10';
-                return env('GOOGLE_API_KEY_6');
+                return env('GOOGLE_API_KEY_3');
             case '12';
-                return env('GOOGLE_API_KEY_7');
+                return env('GOOGLE_API_KEY_1');
             case '14';
-                return env('GOOGLE_API_KEY_8');
+                return env('GOOGLE_API_KEY_2');
             case '16';
-                return env('GOOGLE_API_KEY_9');
+                return env('GOOGLE_API_KEY_3');
             case '18';
-                return env('GOOGLE_API_KEY_10');
+                return env('GOOGLE_API_KEY_1');
             case '20';
-                return env('GOOGLE_API_KEY_11');
+                return env('GOOGLE_API_KEY_2');
             case '22';
-                return env('GOOGLE_API_KEY_12');
+                return env('GOOGLE_API_KEY_3');
             default;
-                //正午でキーを切り替える
-                $noon  =new DateTime();
-                $noon->setTime(12,0,0);
-                return $now < $noon ? env('GOOGLE_API_SUB_KEY_1') : env('GOOGLE_API_SUB_KEY_2');
+                return env('GOOGLE_API_TEST_KEY');
         }
     }
 }
