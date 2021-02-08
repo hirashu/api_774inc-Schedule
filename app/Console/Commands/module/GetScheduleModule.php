@@ -110,30 +110,34 @@ class GetScheduleModule
     {
         //現在の時間を取得し、2時間おきに使用するキーを変更する。
         $now = new DateTime();
+        print_r($now->format('H') . "\n");
         switch ($now->format('H')) {
             case '00';
-                return env('GOOGLE_API_KEY_1');
+            case '01';
             case '02';
-                return env('GOOGLE_API_KEY_2');
+            case '03';
             case '04';
-                return env('GOOGLE_API_KEY_3');
+            case '05';
             case '06';
+            case '07';
                 return env('GOOGLE_API_KEY_1');
             case '08';
-                return env('GOOGLE_API_KEY_2');
+            case '09';
             case '10';
-                return env('GOOGLE_API_KEY_3');
+            case '11';
             case '12';
-                return env('GOOGLE_API_KEY_1');
+            case '13';
             case '14';
+            case '15';
                 return env('GOOGLE_API_KEY_2');
             case '16';
-                return env('GOOGLE_API_KEY_3');
+            case '17';
             case '18';
-                return env('GOOGLE_API_KEY_1');
+            case '19';
             case '20';
-                return env('GOOGLE_API_KEY_2');
+            case '21';
             case '22';
+            case '23';
                 return env('GOOGLE_API_KEY_3');
             default;
                 return env('GOOGLE_API_TEST_KEY');
