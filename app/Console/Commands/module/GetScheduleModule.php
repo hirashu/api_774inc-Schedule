@@ -100,9 +100,9 @@ class GetScheduleModule
         $videoList_liveStreamingDetails = collect($items->getItems())->pluck(['liveStreamingDetails'])->first();
         $video = ['id' => $videoList_id, 'snippet' => $videoList_snippet, 'liveStreamingDetails' => $videoList_liveStreamingDetails];
         */
+        $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
         $filterItems = collect($items->getItems())->filter(function ($item,$date) {
-            $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
-            return $item['liveStreamingDetails']==null ? true :$item['liveStreamingDetails']['scheduledStartTime'] > $date;
+            return $item['liveStreamingDetails']==null ? true :$item['liveStreamingDetails']['scheduledStartTime'] > '$date';
         });
         $items['items']=$filterItems;
         $videoIdList = $items;
