@@ -50,7 +50,7 @@ class GetScheduleModule
         $youtube = new Google_Service_YouTube($client);
 
         //時間設定は RFC 3339 形式の date-time 値
-        $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
+        $date = date('Y-m-d', strtotime('-1 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
         print_r($date . "\n");
 
         $videoIdList = array();
@@ -100,7 +100,15 @@ class GetScheduleModule
         $videoList_liveStreamingDetails = collect($items->getItems())->pluck(['liveStreamingDetails'])->first();
         $video = ['id' => $videoList_id, 'snippet' => $videoList_snippet, 'liveStreamingDetails' => $videoList_liveStreamingDetails];
         */
-        $str = json_encode($items, JSON_UNESCAPED_UNICODE);
+        $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
+        $filterItems = collect($items->getItems())->filter(function ($item) {
+                return $item['liveStreamingDetails']==null ? true :$item['liveStreamingDetails']['scheduledStartTime'] > '$date';
+        });
+        $items['items']=$filterItems;
+        $videoIdList = $items;
+
+
+        $str = json_encode($videoIdList, JSON_UNESCAPED_UNICODE);
 
         //JSONで保存（storage/app）
         Storage::put(env('SCHEDULE_FILE_NAME'), $str);
@@ -120,7 +128,7 @@ class GetScheduleModule
             case '05';
             case '06';
             case '07';
-                return env('GOOGLE_API_KEY_1');
+                return env('GOOGLE_API_TEST_KEY');
             case '08';
             case '09';
             case '10';
@@ -129,7 +137,7 @@ class GetScheduleModule
             case '13';
             case '14';
             case '15';
-                return env('GOOGLE_API_KEY_2');
+                return env('GOOGLE_API_TEST_KEY');
             case '16';
             case '17';
             case '18';
@@ -138,7 +146,7 @@ class GetScheduleModule
             case '21';
             case '22';
             case '23';
-                return env('GOOGLE_API_KEY_3');
+                return env('GOOGLE_API_TEST_KEY');
             default;
                 return env('GOOGLE_API_TEST_KEY');
         }
