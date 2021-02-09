@@ -128,7 +128,7 @@ class GetScheduleModule
             case '05';
             case '06';
             case '07';
-                return env('GOOGLE_API_TEST_KEY');
+                return env('GOOGLE_API_KEY_1');
             case '08';
             case '09';
             case '10';
@@ -137,7 +137,7 @@ class GetScheduleModule
             case '13';
             case '14';
             case '15';
-                return env('GOOGLE_API_TEST_KEY');
+                return env('GOOGLE_API_KEY_2');
             case '16';
             case '17';
             case '18';
@@ -146,7 +146,7 @@ class GetScheduleModule
             case '21';
             case '22';
             case '23';
-                return env('GOOGLE_API_TEST_KEY');
+                return env('GOOGLE_API_KEY_3');
             default;
                 return env('GOOGLE_API_TEST_KEY');
         }
