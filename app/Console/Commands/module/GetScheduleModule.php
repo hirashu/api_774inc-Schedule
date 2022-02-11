@@ -14,13 +14,13 @@ class GetScheduleModule
     const MAX_SNIPPETS_COUNT = 50;
     const DEFAULT_ORDER_TYPE = 'viewCount';
 
-    private string $googleApiKye;
+    //private string $googleApiKye;
 
     public function saveVideoInfo()
     {
         //APIキーの設定
-        $this->googleApiKye = $this->getGoogleApiKey();
-        echo $this->googleApiKye;
+        //$this->googleApiKye = $this->getGoogleApiKey();
+        echo $this->getGoogleApiKey();
 
         //チェンネルIdの配列を取得
         $channelIds = MemberChannelId::getValues();
@@ -44,12 +44,12 @@ class GetScheduleModule
     {
         // Googleへの接続情報のインスタンスを作成と設定
         $client = new Google_Client();
-        $client->setDeveloperKey($this->googleApiKye);
+        $client->setDeveloperKey($this->getGoogleApiKey());
 
         // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $youtube = new Google_Service_YouTube($client);
 
-        //時間設定は RFC 3339 形式の date-time 値
+        //時間設定は RFC 3339 形式の date-time 値  (日本時間は調整が必要)
         $date = date('Y-m-d', strtotime('-1 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
         print_r($date . "\n");
 
@@ -83,7 +83,7 @@ class GetScheduleModule
     {
         // Googleへの接続情報のインスタンスを作成と設定
         $client = new Google_Client();
-        $client->setDeveloperKey($this->googleApiKye);
+        $client->setDeveloperKey($this->getGoogleApiKey());
         // 接続情報のインスタンスを用いてYoutubeのデータへアクセス可能なインスタンスを生成
         $youtube = new Google_Service_YouTube($client);
 
@@ -100,9 +100,11 @@ class GetScheduleModule
         $videoList_liveStreamingDetails = collect($items->getItems())->pluck(['liveStreamingDetails'])->first();
         $video = ['id' => $videoList_id, 'snippet' => $videoList_snippet, 'liveStreamingDetails' => $videoList_liveStreamingDetails];
         */
-        $date = date('Y-m-d', strtotime('0 day')) . 'T' . date('H:m:s', mktime(0, 0, 0)) . 'Z';
+        $date = date('Y-m-d', strtotime('0 day') + 9 * 60 * 60) . 'T' . date('H:m:s', strtotime('0 day') + 9 * 60 * 60) . 'Z';
+        print_r($date. "\n");
         $filterItems = collect($items->getItems())->filter(function ($item,$date) {
-            return $item['liveStreamingDetails']==null ? true :$item['liveStreamingDetails']['scheduledStartTime'] > '$date';
+            echo $item['liveStreamingDetails']['scheduledStartTime'] > $date;
+            return $item['liveStreamingDetails']==null ? true :$item['liveStreamingDetails']['scheduledStartTime'] > $date;
         });
         $items['items']=$filterItems;
         $videoIdList = $items;
