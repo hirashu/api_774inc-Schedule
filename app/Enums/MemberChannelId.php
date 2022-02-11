@@ -18,7 +18,6 @@ final class MemberChannelId extends Enum
     const KAZAMI_KUKU = "UCXp7sNC0F_qkjickvlYkg-Q";           //風見くく
     const YUNOHARA_IZUMI = "UCW8WKciBixmaqaGqrlTITRQ";        //柚原いづみ
     const SHIROMIYA_MIMI = "UCtzCQnCT9E4o6U3mHHSHbQQ";        //白宮みみ
-    const HASHIBA_NATSUMI = "UC_BlXOQe5OcRC7o0GX8kp8A";       //羽柴なつみ
     const SESHIMA_RUI = "UC_WOBIopwUih0rytRnr_1Ag";           //瀬島るい
     const HIRA_HIKARI = "UCFsWaTQ7kT76jNNGeGIKNSA";           //飛良ひかり
     const TSUKINO_TIROL = "UCqskJ0nmw-_eweWfsKvbrzQ";         //月野木ちろる
@@ -39,4 +38,11 @@ final class MemberChannelId extends Enum
     const KANADE_KANON = "UCmqrvfLMws-GLGHQcB5dasg";          //花奏かのん
     const KOMORI_METO = "UCzUNASdzI4PV5SlqtYwAkKQ";           //小森めと
     const FUMA_MAT = "UCV4EoK6BVNl7wxuxpUvvSWA";              //不磨わっと
+    /**ヒヨクロ*/
+    const SUZUMI_NEMO = "UCBJ6nejlzes6mm9UruaxQsA";           //涼海ネモ
+    const AKANE_CANNA = "UCkpqb53xiOvOgNYEbNpFSyw";           //茜音カンナ
+    const TOURI_SEI = "UCBxw5bdrbKO7E60E4s3KgQg";             //橙里セイ
+    const SHISUI_KIKI = "UC3MBUvkVTI9p-p0be7y7TQA";           //紫水キキ
+    const IEIRI_POPO = "UC_hjHmi-ODGhHlSzD16p5Pw";            //家入ポポ
+    const KOHAKU_YURI = "UCGyywYAJd2O5Y7yUyr7qBRQ";           //瑚白ユリ
 }
